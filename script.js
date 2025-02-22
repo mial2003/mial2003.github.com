@@ -3,7 +3,18 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
 menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
     navLinks.classList.toggle('active');
+});
+
+// تغيير خلفية الـNavbar عند التمرير
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
 });
 
 // تأثير الظهور عند التمرير
@@ -36,9 +47,9 @@ if (contactForm) {
     });
 }
 
-// تأثير حركي إضافي على بطاقات الأسعار
-const priceCards = document.querySelectorAll('.price-card');
-priceCards.forEach(card => {
+// تأثير حركي إضافي على بطاقات المشاريع والأسعار
+const interactiveCards = document.querySelectorAll('.project-card, .price-card');
+interactiveCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;

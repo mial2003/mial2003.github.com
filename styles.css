@@ -14,8 +14,8 @@ body {
 
 /* شريط التنقل (Navbar) */
 .navbar {
-    background: rgba(26, 26, 26, 0.95);
-    padding: 10px 40px;
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.1), rgba(139, 92, 246, 0.1));
+    padding: 8px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,66 +23,105 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.navbar.scrolled {
+    background: linear-gradient(90deg, rgba(0, 212, 255, 0.9), rgba(139, 92, 246, 0.9));
 }
 
 .logo {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-.logo span {
+.logo-main {
     color: #fff;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.logo-main:hover {
+    transform: scale(1.05);
 }
 
 .logo-subtitle {
-    font-size: 0.8rem;
-    color: #00d4ff;
+    font-size: 0.7rem;
+    color: #e0e0e0;
     font-weight: 300;
+    text-shadow: 0 0 5px rgba(139, 92, 246, 0.3);
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 30px;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-item {
     color: #fff;
     text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 500;
     position: relative;
-    transition: color 0.3s ease;
+    padding: 4px 8px;
+    transition: all 0.3s ease;
 }
 
-.nav-item::after {
+.nav-item::before {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
-    background: #00d4ff;
-    bottom: -5px;
-    right: 0;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     transition: width 0.3s ease;
 }
 
-.nav-item:hover::after {
+.nav-item:hover::before {
     width: 100%;
 }
 
 .nav-item:hover {
-    color: #00d4ff;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+    transform: translateY(-2px);
 }
 
 .menu-toggle {
     display: none;
-    color: #fff;
-    font-size: 1.8rem;
+    flex-direction: column;
+    gap: 4px;
     cursor: pointer;
+}
+
+.menu-toggle .bar {
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(4px, 4px);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* القسم التعريفي (Hero Section) */
@@ -179,7 +218,7 @@ body {
     box-shadow: 0 10px 25px rgba(0, 212, 255, 0.6);
 }
 
-/* قسم عني (محسن للصفحة الرئيسية) */
+/* قسم عني */
 .about-section {
     padding: 100px 20px;
     background: #1a1a1a;
@@ -268,17 +307,83 @@ body {
     color: #ccc;
 }
 
+/* قسم الأسعار */
+.pricing-section {
+    padding: 100px 20px;
+    background: #1a1a1a;
+    text-align: center;
+}
+
+.pricing-section .section-title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 50px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.price-card {
+    background: #252525;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.price-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+}
+
+.package-title {
+    font-size: 1.8rem;
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+.package-price {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.package-features {
+    list-style: none;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+.package-features li {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.price-card .btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
 /* قسم التواصل */
 .contact-section {
     padding: 100px 20px;
-    background: #f0f2f5;
+    background: #1a1a1a;
     text-align: center;
-    color: #1a1a1a;
+    color: #fff;
 }
 
 .contact-section .section-title {
     font-size: 3rem;
-    color: #1a1a1a;
+    color: #fff;
     margin-bottom: 50px;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -294,10 +399,14 @@ input, textarea {
     margin: 15px 0;
     border: none;
     border-radius: 10px;
-    background: #fff;
+    background: #333;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     font-size: 1.1rem;
-    color: #333;
+    color: #fff;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #ccc;
 }
 
 textarea {
@@ -387,85 +496,29 @@ textarea {
     .hero-subtitle { font-size: 1.2rem; }
     .section-title { font-size: 2.5rem; }
     .about-section .about-text { font-size: 1.3rem; }
-    .nav-links { 
-        display: none; 
-        flex-direction: column; 
-        position: absolute; 
-        top: 60px; 
-        right: 0; 
-        background: rgba(26, 26, 26, 0.95); 
-        width: 100%; 
-        padding: 20px; 
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background: linear-gradient(90deg, rgba(0, 212, 255, 0.9), rgba(139, 92, 246, 0.9));
+        width: 100%;
+        padding: 15px;
         text-align: center;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
-    .nav-links.active { display: flex; }
-    .menu-toggle { display: block; }
+    .nav-links.active {
+        display: flex;
+    }
+    .menu-toggle {
+        display: flex;
+    }
+    .nav-item {
+        font-size: 1.2rem;
+        padding: 8px;
+    }
     .hero-buttons { flex-direction: column; gap: 15px; }
     .projects-grid { grid-template-columns: 1fr; }
-}
-
-/* قسم الأسعار */
-.pricing-section {
-    padding: 100px 20px;
-    background: #1a1a1a;
-    text-align: center;
-}
-
-.pricing-section .section-title {
-    font-size: 3rem;
-    color: #fff;
-    margin-bottom: 50px;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.price-card {
-    background: #252525;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.price-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
-}
-
-.package-title {
-    font-size: 1.8rem;
-    color: #00d4ff; /* لون سماوي للعنوان */
-    margin-bottom: 15px;
-}
-
-.package-price {
-    font-size: 2rem;
-    color: #fff;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.package-features {
-    list-style: none;
-    margin-bottom: 30px;
-    color: #ccc;
-}
-
-.package-features li {
-    font-size: 1.1rem;
-    margin: 10px 0;
-}
-
-.price-card .btn {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
+    .pricing-grid { grid-template-columns: 1fr; }
 }
