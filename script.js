@@ -1,64 +1,70 @@
 // التحكم في قائمة التنقل على الشاشات الصغيرة
-document.querySelector('.menu-toggle').addEventListener('click', () => {
-    document.querySelector('.menu-toggle').classList.toggle('active');
-    document.querySelector('.nav-links').classList.toggle('active');
-});
-
-// تغيير خلفية الـNavbar عند التمرير
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
     }
-});
 
-// تأثير الظهور عند التمرير
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
+    // تغيير خلفية الـNavbar عند التمرير
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
     });
-}, { threshold: 0.3 });
 
-document.querySelectorAll('.fade-in, .slide-in').forEach(el => observer.observe(el));
+    // تأثير الظهور عند التمرير
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+            }
+        });
+    }, { threshold: 0.3 });
 
-// تأثير Parallax للخلفية في الصفحة الرئيسية
-const parallaxBg = document.querySelector('.parallax-bg');
-if (parallaxBg) {
-    window.addEventListener('scroll', () => {
-        let scrollPosition = window.pageYOffset;
-        parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+    document.querySelectorAll('.fade-in, .slide-in').forEach(el => observer.observe(el));
+
+    // تأثير Parallax للخلفية في الصفحة الرئيسية
+    const parallaxBg = document.querySelector('.parallax-bg');
+    if (parallaxBg) {
+        window.addEventListener('scroll', () => {
+            let scrollPosition = window.pageYOffset;
+            parallaxBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+        });
+    }
+
+    // التعامل مع نموذج التواصل
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(localStorage.getItem('language') === 'en' ? 'Your message has been sent successfully! I will contact you soon.' : 'تم إرسال رسالتك بنجاح! سيتم التواصل معك قريبًا.');
+            this.reset();
+        });
+    }
+
+    // تأثير حركي على بطاقات المشاريع والأسعار
+    document.querySelectorAll('.project-card, .price-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.transform = `translateY(-10px) rotateX(${(y - rect.height / 2) / 20}deg) rotateY(${(x - rect.width / 2) / 20}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+        });
     });
-}
 
-// التعامل مع نموذج التواصل
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert(localStorage.getItem('language') === 'en' ? 'Your message has been sent successfully! I will contact you soon.' : 'تم إرسال رسالتك بنجاح! سيتم التواصل معك قريبًا.');
-        this.reset();
-    });
-}
-
-// تأثير حركي على بطاقات المشاريع والأسعار
-document.querySelectorAll('.project-card, .price-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.transform = `translateY(-10px) rotateX(${(y - rect.height / 2) / 20}deg) rotateY(${(x - rect.width / 2) / 20}deg)`;
-    });
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-    });
-});
-
-// التحكم في النافذة المنبثقة (Modal)
-document.addEventListener('DOMContentLoaded', () => {
+    // التحكم في النافذة المنبثقة (Modal)
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const closeModal = document.querySelector('.close-modal');
@@ -90,7 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const elements = document.querySelectorAll('[data-ar][data-en]');
     const placeholders = document.querySelectorAll('[data-ar-placeholder][data-en-placeholder]');
     const langToggle = document.querySelector('.lang-toggle');
-    
+
+    if (!langToggle) {
+        console.error('Language toggle button not found!');
+        return;
+    }
+
     // تحقق من اللغة المخزنة أو استخدم العربية افتراضيًا
     const savedLang = localStorage.getItem('language') || 'ar';
     if (savedLang === 'en') {
