@@ -39,7 +39,7 @@ const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        alert('تم إرسال رسالتك بنجاح! سيتم التواصل معك قريبًا.');
+        alert(localStorage.getItem('language') === 'en' ? 'Your message has been sent successfully! I will contact you soon.' : 'تم إرسال رسالتك بنجاح! سيتم التواصل معك قريبًا.');
         this.reset();
     });
 }
@@ -64,35 +64,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModal = document.querySelector('.close-modal');
     const projectImages = document.querySelectorAll('.project-image');
 
-    // التحقق من وجود العناصر
-    if (!modal) console.error('Modal element not found!');
-    if (!modalImage) console.error('Modal image element not found!');
-    if (!closeModal) console.error('Close modal button not found!');
-    if (projectImages.length === 0) console.error('No project images found!');
-
-    projectImages.forEach(image => {
-        image.addEventListener('click', () => {
-            console.log('Opening modal with image:', image.getAttribute('data-full'));
-            if (modal) {
-                modal.style.display = 'flex'; // عرض النافذة
+    if (modal && modalImage && closeModal && projectImages.length > 0) {
+        projectImages.forEach(image => {
+            image.addEventListener('click', () => {
+                console.log('Opening modal with image:', image.getAttribute('data-full'));
+                modal.style.display = 'flex';
                 modalImage.src = image.getAttribute('data-full');
-            } else {
-                console.error('Modal is still not accessible!');
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            console.log('Closing modal');
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                console.log('Closing modal by clicking outside');
+                modal.style.display = 'none';
             }
         });
-    });
+    }
 
-    closeModal.addEventListener('click', () => {
-        console.log('Closing modal');
-        if (modal) {
-            modal.style.display = 'none'; // إخفاء النافذة
-        }
-    });
+    // إعداد اللغة عند تحميل الصفحة
+    const elements = document.querySelectorAll('[data-ar][data-en]');
+    const placeholders = document.querySelectorAll('[data-ar-placeholder][data-en-placeholder]');
+    const langToggle = document.querySelector('.lang-toggle');
+    
+    // تحقق من اللغة المخزنة أو استخدم العربية افتراضيًا
+    const savedLang = localStorage.getItem('language') || 'ar';
+    if (savedLang === 'en') {
+        document.body.classList.add('en');
+        langToggle.textContent = 'AR';
+        elements.forEach(element => {
+            element.textContent = element.getAttribute('data-en');
+        });
+        placeholders.forEach(input => {
+            input.placeholder = input.getAttribute('data-en-placeholder');
+        });
+        document.title = document.querySelector('title').getAttribute('data-en');
+    } else {
+        document.body.classList.remove('en');
+        langToggle.textContent = 'EN';
+        elements.forEach(element => {
+            element.textContent = element.getAttribute('data-ar');
+        });
+        placeholders.forEach(input => {
+            input.placeholder = input.getAttribute('data-ar-placeholder');
+        });
+        document.title = document.querySelector('title').getAttribute('data-ar');
+    }
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            console.log('Closing modal by clicking outside');
-            modal.style.display = 'none'; // إخفاء النافذة
-        }
+    // تبديل اللغة عند النقر وعند التخزين
+    langToggle.addEventListener('click', () => {
+        const isEnglish = !document.body.classList.contains('en');
+        document.body.classList.toggle('en');
+        localStorage.setItem('language', isEnglish ? 'en' : 'ar');
+        langToggle.textContent = isEnglish ? 'AR' : 'EN';
+
+        elements.forEach(element => {
+            element.textContent = isEnglish ? element.getAttribute('data-en') : element.getAttribute('data-ar');
+        });
+
+        placeholders.forEach(input => {
+            input.placeholder = isEnglish ? input.getAttribute('data-en-placeholder') : input.getAttribute('data-ar-placeholder');
+        });
+
+        document.title = isEnglish ? document.querySelector('title').getAttribute('data-en') : document.querySelector('title').getAttribute('data-ar');
     });
 });
