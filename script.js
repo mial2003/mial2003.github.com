@@ -6,10 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
+            menuToggle.classList.add('clicked');
+            setTimeout(() => menuToggle.classList.remove('clicked'), 500); // إزالة الفئة بعد الدوران
         });
     }
 
-    // تغيير خلفية الـNavbar عند التمرير
+    // تغيير خلفية الـNavbar عند التمرير (تم تعطيله بناءً على طلبك)
     window.addEventListener('scroll', () => {
         const navbar = document.querySelector('.navbar');
         if (navbar) {
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const elements = document.querySelectorAll('[data-ar][data-en]');
     const placeholders = document.querySelectorAll('[data-ar-placeholder][data-en-placeholder]');
     const langToggle = document.querySelector('.lang-toggle');
+    const navItems = document.querySelectorAll('.nav-item');
 
     if (!langToggle) {
         console.error('Language toggle button not found!');
@@ -126,12 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.title = document.querySelector('title').getAttribute('data-ar');
     }
 
-    // تبديل اللغة عند النقر وعند التخزين
+    // تبديل اللغة عند النقر مع تأثير دوران
     langToggle.addEventListener('click', () => {
         const isEnglish = !document.body.classList.contains('en');
         document.body.classList.toggle('en');
         localStorage.setItem('language', isEnglish ? 'en' : 'ar');
         langToggle.textContent = isEnglish ? 'AR' : 'EN';
+        langToggle.classList.add('clicked');
+        setTimeout(() => langToggle.classList.remove('clicked'), 500); // إزالة الفئة بعد الدوران
 
         elements.forEach(element => {
             element.textContent = isEnglish ? element.getAttribute('data-en') : element.getAttribute('data-ar');
@@ -142,5 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.title = isEnglish ? document.querySelector('title').getAttribute('data-en') : document.querySelector('title').getAttribute('data-ar');
+    });
+
+    // إضافة تأثير دوران عند النقر على الروابط
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.add('clicked');
+            setTimeout(() => item.classList.remove('clicked'), 500); // إزالة الفئة بعد الدوران
+        });
     });
 });
