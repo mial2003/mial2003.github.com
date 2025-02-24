@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مشاريعي - رجب علام</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
@@ -32,49 +33,49 @@
         <h2 class="section-title fade-in">مشاريعي</h2>
         <div class="projects-grid">
             <div class="project-card fade-in">
-                <img src="images/project1.jpg" alt="مشروع 1">
+                <img src="images/project1.jpg" alt="مشروع 1" class="project-image" data-full="images/project1.jpg">
                 <div class="project-info">
                     <h3>مشروع 1</h3>
                     <p>تصميم شعار لشركة ناشئة مع هوية بصرية.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project2.jpg" alt="مشروع 2">
+                <img src="images/project2.jpg" alt="مشروع 2" class="project-image" data-full="images/project2.jpg">
                 <div class="project-info">
                     <h3>مشروع 2</h3>
                     <p>بروشور ترويجي لمنتج جديد.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project3.jpg" alt="مشروع 3">
+                <img src="images/project3.jpg" alt="مشروع 3" class="project-image" data-full="images/project3.jpg">
                 <div class="project-info">
                     <h3>مشروع 3</h3>
                     <p>واجهة تطبيق موبايل حديث.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project4.jpg" alt="مشروع 4">
+                <img src="images/project4.jpg" alt="مشروع 4" class="project-image" data-full="images/project4.jpg">
                 <div class="project-info">
                     <h3>مشروع 4</h3>
                     <p>تصميم بوسترات إعلانية لمعرض تجاري.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project5.jpg" alt="مشروع 5">
+                <img src="images/project5.jpg" alt="مشروع 5" class="project-image" data-full="images/project5.jpg">
                 <div class="project-info">
                     <h3>مشروع 5</h3>
                     <p>تصميم غلاف كتاب إبداعي.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project6.jpg" alt="مشروع 6">
+                <img src="images/project6.jpg" alt="مشروع 6" class="project-image" data-full="images/project6.jpg">
                 <div class="project-info">
                     <h3>مشروع 6</h3>
                     <p>تصميم شعار وبطاقات عمل لمطعم.</p>
                 </div>
             </div>
             <div class="project-card fade-in">
-                <img src="images/project7.jpg" alt="مشروع 7">
+                <img src="images/project7.jpg" alt="مشروع 7" class="project-image" data-full="images/project7.jpg">
                 <div class="project-info">
                     <h3>مشروع 7</h3>
                     <p>تصميم حملة إعلانية على وسائل التواصل.</p>
@@ -82,6 +83,14 @@
             </div>
         </div>
     </section>
+
+    <!-- النافذة المنبثقة (Modal) -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <img id="modalImage" src="" alt="صورة المشروع">
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
